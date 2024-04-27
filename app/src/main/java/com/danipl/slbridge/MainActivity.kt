@@ -27,5 +27,6 @@ class MainActivity : Activity() {
             finishAndRemoveTask()
         }
     }
+    // hello
 }
 
