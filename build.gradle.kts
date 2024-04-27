@@ -2,4 +2,8 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
+    id("com.google.gms.google-services") version "4.4.1" apply false
+
+    // Add the dependency for the App Distribution Gradle plugin
+    id("com.google.firebase.appdistribution") version "4.2.0" apply false
 }

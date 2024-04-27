@@ -1,6 +1,11 @@
+import com.google.firebase.appdistribution.gradle.AppDistributionExtension
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.gms.google-services")
+    // Add the App Distribution Gradle plugin
+    id("com.google.firebase.appdistribution")
 }
 
 android {
@@ -50,4 +55,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.timber)
+    implementation(platform(libs.firebase.bom))
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-analytics")
 }
