@@ -76,7 +76,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
-        buildConfig = true
+        buildConfig = false
     }
     packaging {
         resources {
