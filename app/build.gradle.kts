@@ -32,6 +32,40 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            firebaseAppDistribution {
+                artifactType = "APK"
+                serviceCredentialsFile = "./slbridge-serviceaccount.json"
+                releaseNotes = "Release notes placeholder"
+                groups = "slbridgetesters"
+            }
+        }
+        debug {
+            firebaseAppDistribution {
+                artifactType = "APK"
+                serviceCredentialsFile = "./slbridge-serviceaccount.json"
+                releaseNotes = "Release notes placeholder"
+                groups = "slbridgetesters"
+            }
+        }
+    }
+
+    val environmentDimension = "environment"
+    flavorDimensions += environmentDimension
+
+    productFlavors {
+
+        create("dev") {
+            dimension = environmentDimension
+            signingConfig = signingConfigs.getByName("debug")
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-DEV"
+
+
+            configure<AppDistributionExtension> {
+                groups = "slbridgetesters"
+                releaseNotesFile = "Release notes placeholder"
+            }
         }
     }
     compileOptions {
