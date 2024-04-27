@@ -1,7 +1,9 @@
 import jetbrains.buildServer.configs.kotlin.*
-import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
+import jetbrains.buildServer.configs.kotlin.buildFeatures.*
 import jetbrains.buildServer.configs.kotlin.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -29,11 +31,11 @@ version = "2024.03"
 
 project {
 
-    buildType(Build)
+    buildType(BuildMergeRequest)
 }
 
-object Build : BuildType({
-    name = "Build"
+object BuildMergeRequest : BuildType({
+    name = "BuildMergeRequest"
 
     vcs {
         root(DslContext.settingsRoot)
@@ -41,19 +43,17 @@ object Build : BuildType({
 
     steps {
         gradle {
-            id = "gradle_runner"
-            tasks = "clean build"
-            gradleWrapperPath = ""
+            name = "Build"
+            tasks = "clean assembleDevRelease"
+            buildFile = "build.gradle.kts"
+            gradleParams = "%DEFAULT_GRADLE_ARGS% -Dorg.gradle.daemon=false"
+            enableStacktrace = true
         }
     }
 
     triggers {
         vcs {
-        }
-    }
-
-    features {
-        perfmon {
+            branchFilter = "+:merge-requests/*"
         }
     }
 })
